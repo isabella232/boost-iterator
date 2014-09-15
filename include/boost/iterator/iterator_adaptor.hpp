@@ -302,8 +302,15 @@ namespace boost
       // will often result in an error.  Derived classes should use
       // base_reference(), above, to get direct access to m_iterator.
       // 
+#if defined( __GNUC__ ) && ( __GNUC__ * 100 + __GNUC_MINOR__ >= 406 )
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wreturn-local-addr"
+#endif
       typename super_t::reference dereference() const
         { return *m_iterator; }
+#if defined( __GNUC__ ) && ( __GNUC__ * 100 + __GNUC_MINOR__ >= 406 )
+#pragma GCC diagnostic pop
+#endif
 
       template <
       class OtherDerived, class OtherIterator, class V, class C, class R, class D
